@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import CategoriasContext from './context/CategoriasProvider';
+import CategoriasContext from "../context/CategriasProvider";
 
 const useCategorias = () => { 
   return useContext(CategoriasContext);
