@@ -23,6 +23,7 @@ const Formulario = () => {
 		setAlerta("");
 	};
 
+	<input type="submit" value="" />
 	return (
 		<Form onSubmit={handleSubmit}>
 			{alerta && <Alert variant="danger" className="text-center">{alerta}</Alert>}
