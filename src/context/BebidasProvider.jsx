@@ -55,7 +55,8 @@ const BebidasProvider = ({children}) => {
 				modal,
 				handleModalClick,
 				handleBebidaID,
-				receta,
+        receta,
+        setReceta,
 			}}
 		>
 			{children}

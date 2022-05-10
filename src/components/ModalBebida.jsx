@@ -2,7 +2,7 @@ import {Modal, Image} from "react-bootstrap";
 import useBebidas from "../hooks/useBebidas";
 
 const ModalBebida = () => {
-	const {modal, handleModalClick, receta} = useBebidas();
+	const {modal, handleModalClick, receta,  setReceta} = useBebidas();
 
 	const mostrarIngredientes = () => {
 		let ingredientes = [];
@@ -18,7 +18,7 @@ const ModalBebida = () => {
 	};
 
 	return (
-		<Modal show={modal} onHide={handleModalClick}>
+		<Modal show={modal} onHide={() => {handleModalClick(),  setReceta({})}}>
 			<Image
 				src={receta.strDrinkThumb}
 				alt={`Imagen de la Receta ${receta.strDrink}`}
