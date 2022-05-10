@@ -7,7 +7,8 @@ const BebidasProvider = ({children}) => {
 	const [bebidas, setBebidas] = useState([]);
 	const [modal, setModal] = useState(false);
 	const [bebidaID, setBebidaID] = useState(null);
-	const [receta, setReceta] = useState({});
+  const [receta, setReceta] = useState({});
+  const [cargando, setCargando] = useState(false);
 
 	// Consulta las bebidas
 	const consultarBebida = async (datos) => {
@@ -21,7 +22,8 @@ const BebidasProvider = ({children}) => {
 	};
 
 	// Consulta receta para el Modal
-	const consultarReceta = async () => {
+  const consultarReceta = async () => {
+    setCargando(true);
 		if (!bebidaID) return;
 
 		try {
@@ -30,7 +32,8 @@ const BebidasProvider = ({children}) => {
 			setReceta(data.drinks[0]);
 		} catch (error) {
 			console.log(error);
-		}
+    }
+    setCargando(false);
 	};
 
 	useEffect(() => {
@@ -56,7 +59,7 @@ const BebidasProvider = ({children}) => {
 				handleModalClick,
 				handleBebidaID,
         receta,
-        setReceta,
+        cargando
 			}}
 		>
 			{children}
