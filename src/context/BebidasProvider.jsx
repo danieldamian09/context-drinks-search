@@ -1,4 +1,4 @@
-import {useState, createContext} from "react";
+import {useState, createContext, useEffect} from "react";
 import axios from "axios";
 
 const BebidasContext = createContext();
@@ -6,7 +6,10 @@ const BebidasContext = createContext();
 const BebidasProvider = ({children}) => {
 	const [bebidas, setBebidas] = useState([]);
 	const [modal, setModal] = useState(false);
+	const [bebidaID, setBebidaID] = useState(null);
+	const [receta, setReceta] = useState({});
 
+	// Consulta las bebidas
 	const consultarBebida = async (datos) => {
 		try {
 			const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${datos.nombre}&c=${datos.categoria}`;
@@ -17,8 +20,31 @@ const BebidasProvider = ({children}) => {
 		}
 	};
 
+	// Consulta receta para el Modal
+	const consultarReceta = async () => {
+		if (!bebidaID) return;
+
+		try {
+			const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${bebidaID}`;
+			const {data} = await axios(url);
+			setReceta(data.drinks[0]);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		consultarReceta();
+	}, [bebidaID]);
+
+  // Abre  y cierra el Modal
 	const handleModalClick = () => {
 		setModal(!modal);
+	};
+
+  // Guarda el ID de la bebida para consultar la receta
+	const handleBebidaID = (id) => {
+		setBebidaID(id);
 	};
 
 	return (
@@ -26,8 +52,10 @@ const BebidasProvider = ({children}) => {
 			value={{
 				consultarBebida,
 				bebidas,
-        modal,
-        handleModalClick
+				modal,
+				handleModalClick,
+				handleBebidaID,
+				receta,
 			}}
 		>
 			{children}
